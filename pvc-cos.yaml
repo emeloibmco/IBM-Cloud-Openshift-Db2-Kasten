@@ -1,0 +1,21 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-cos # Enter the name of the PVC.
+  namespace: db2-test-5 # Enter the namespace where you want to create the PVC. The PVC must be created in the same namespace where you created the Kubernetes secret for your service credentials and where you want to run your pod.
+  annotations:
+    ibm.io/auto-create-bucket: "true"
+    ibm.io/auto-delete-bucket: "true"
+    ibm.io/quota-limit: "true" 
+    ibm.io/endpoint: "https://s3.us-east.cloud-object-storage.appdomain.cloud"
+    ibm.io/tls-cipher-suite: "default"
+    ibm.io/secret-name: "cos-write-access" 
+    ibm.io/secret-namespace: "cos" # By default, the COS plug-in searches for your secret in the same namespace where you create the PVC. If you created your secret in a namespace other than the namespace where you want to create your PVC, enter the namespace where you created your secret.
+    ibm.io/add-mount-param: "nonempty" # s3fs mount options
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi # Enter the size of the PVC.
+  storageClassName: ibmc-s3fs-standard-regional

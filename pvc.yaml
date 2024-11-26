@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db2-4
+  namespace: db2-test-5
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 45Gi
+  storageClassName: ibmc-vpc-block-10iops-tier
